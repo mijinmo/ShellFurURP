@@ -4,6 +4,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderVariablesFunctions.hlsl"
 #include "./Param-MP.hlsl"
+#include "./Wool-MP.hlsl"
 
 // For VR single pass instance compability:
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -56,23 +57,19 @@ Varyings vert(Attributes input)
 
     half furLength = SAMPLE_TEXTURE2D_LOD(_FurLengthMap, sampler_FurLengthMap, input.uv / _BaseMap_ST.xy, 0).x;
 
-    float shellStep = _TotalShellStep / _TOTAL_LAYER;
-
     float layer = _CURRENT_LAYER / _TOTAL_LAYER;
 
-    half moveFactor = pow(abs(layer), _BaseMove.w);
-    half3 windAngle = _Time.w * _WindFreq.xyz;
-    half3 windMove = moveFactor * _WindMove.xyz * sin(windAngle + input.positionOS.xyz * _WindMove.w);
-    half3 move = moveFactor * _BaseMove.xyz;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Fur Direction
-    float bent = _BentType * layer + (1 - _BentType);
-
-    groomWS = lerp(normalInput.normalWS, groomWS, _GroomingIntensity * bent);
-    float3 shellDir = SafeNormalize(groomWS + move + windMove);
-
-    float3 positionWS = vertexInput.positionWS + shellDir * (shellStep * _CURRENT_LAYER * furLength * _FurLengthIntensity);
+    // [WOOL PROTOTYPE] Must match Lit-MP.hlsl / Depth-MP.hlsl.
+    float3 positionWS = ComputeWoolShellPositionWS(
+        vertexInput.positionWS,
+        input.positionOS.xyz,
+        normalInput.normalWS,
+        normalInput.tangentWS,
+        normalInput.bitangentWS,
+        groomWS,
+        furLength,
+        layer,
+        input.uv);
 
     output.positionCS = TransformWorldToHClip(positionWS);
     output.uv = TRANSFORM_TEX(input.uv, _BaseMap);

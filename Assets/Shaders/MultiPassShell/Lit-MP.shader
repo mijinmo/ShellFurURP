@@ -32,6 +32,12 @@ Properties
     [Space(10)][Enum(Linear, 0, Quadratic, 1)]_BentType("Fur Bent Type", Float) = 1
     [Toggle(_ALPHATEST_ON)] _AlphaToCoverageOn("MSAA Alpha-To-Coverage", Float) = 1
 
+    [Space][Header(Wool Prototype)][Space]
+    _WoolPuff("Wool Puff", Range(0.1, 3.0)) = 1.0
+    _WoolCurlAmount("Wool Curl Amount", Range(0.0, 3.0)) = 0.0
+    _WoolCurlTurns("Wool Curl Turns", Range(0.0, 3.0)) = 1.0
+    _WoolClumpScale("Wool Clump Scale", Range(0.1, 20.0)) = 5.0
+
     [Space][Header(Lit Material Settings)][Space]
     [MainColor] _BaseColor("Color", Color) = (1.0, 1.0, 1.0, 1.0)
     [Gamma] _Metallic("Metallic", Range(0.0, 1.0)) = 0.0

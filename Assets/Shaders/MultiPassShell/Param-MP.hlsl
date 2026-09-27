@@ -48,6 +48,12 @@ half4 _BaseMove;
 half4 _WindFreq;
 half4 _WindMove;
 
+// [WOOL PROTOTYPE]
+half _WoolPuff;
+half _WoolCurlAmount;
+half _WoolCurlTurns;
+half _WoolClumpScale;
+
 float4 _BaseMap_ST;
 float4 _FurMap_ST;
 

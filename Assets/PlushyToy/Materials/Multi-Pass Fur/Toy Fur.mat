@@ -178,6 +178,10 @@ Material:
     - _Surface: 0
     - _TipSmoothness: 0.85
     - _TotalShellStep: 0.288
+    - _WoolClumpScale: 5
+    - _WoolCurlAmount: 0.9
+    - _WoolCurlTurns: 1.2
+    - _WoolPuff: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
